@@ -1,6 +1,5 @@
 import { openFile } from 'jsroot';
 import fs from 'fs/promises';
-import { createReadStream } from 'fs';
 import path from 'path';
 import nock from 'nock';
 
@@ -12,9 +11,7 @@ async function setupNock() {
   const filePath = path.resolve('mock-data/TObject_1645440261385.root');
   
   // Read the content of the file either as a string or as a stream
-  const fileContent = await fs.readFile(filePath, 'utf-8');
-  // Used both as response to request but with same effect
-  const fileContentAsStream = createReadStream(filePath, 'utf-8');
+  const fileContent = await fs.readFile(filePath);
 
   nock('http://localhost:8081')
   .persist()
